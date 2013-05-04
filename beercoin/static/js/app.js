@@ -73,8 +73,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
     });
   }).
   controller ("ProfileCtrl", function ($scope, Profile, $route, $location, appState) {
-    // $scope.app_name = "My first angular App";
-    $scope.profile = Profile.get({profileId: $route.routeParams["profileName"]});
+    $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
   }).
   controller ("MainCtrl", function ($scope, $location, appState) {
     console.log("yay");
