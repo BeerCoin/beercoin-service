@@ -5,9 +5,16 @@ from beercoin.util.models import UserProfile, User
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from actstream import action
+from actstream.models import following, followers, actor_stream
+
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.template import Context
+from django.conf import settings
 
 class BeerCoinTransactionError(Exception):
     pass
+
 
 def user_to_dict(user, profile=None):
     if not profile:
@@ -36,8 +43,15 @@ def list_profiles(request):
 @login_required
 @as_json
 def get_profile(request, profile_name):
-    user = get_object_or_404(User, username=profile_name)
-    return user_to_dict(user)
+    user = user_to_dict(get_object_or_404(User, username=profile_name))
+    user["following"] = following(request.user)
+    user["followers"] = followers(request.user)
+    user["actions"] = [dict(verb=x.verb,
+                            object=x.action_object and user_to_dict(x.action_object),
+                            when=x.timestamp.strftime("%s"),
+                            data=x.data)
+                        for x in actor_stream(request.user)[:3]]
+    return user
 
 @transaction.commit_on_success
 @login_required
@@ -48,7 +62,7 @@ def issue_beercoin(request):
     what_for = request.GET.get("what_for", None)
     issuer = request.user
 
-    if isser.username == owner.username:
+    if issuer.username == owner.username:
         raise BeerCoinTransactionError("You can owe beers yourself")
 
     if issuer.profile.balance <= -10:
@@ -77,7 +91,7 @@ def redeem_beercoin(request):
     comment = request.GET.get("comment", None)
     owner = request.user
 
-    if isser.username == owner.username:
+    if issuer.username == owner.username:
         raise BeerCoinTransactionError("You can owe beers yourself")
 
     if owner.profile.balance <= 0:
@@ -94,5 +108,25 @@ def redeem_beercoin(request):
 
     if issuer.profile.balance == 0:
         action.send(issuer, verb="freed")
+
+    return {"success": True}
+
+@login_required
+@as_json
+def request_beercoin_redemption(request):
+    issuer = request.user
+    owner = get_object_or_404(User, username=request.GET.get("owner"))
+
+    text_template = get_template('emails/request_beercoin_redemption.txt')
+    #html_template = get_template('emails/request_beercoin_redemption.html')
+
+    context_vars = Context({ 'owner': owner, 'issuer': issuer, })
+
+    text_content = text_template.render(context_vars)
+    #html_content = html_template.render(context_vars)
+    msg = EmailMultiAlternatives('You owe me a beer', text_content, settings.DEFAULT_FROM_EMAIL, [owner.email])
+    #msg.attach_alternative(html_content, "text/html")
+    msg.send()
+
 
     return {"success": True}

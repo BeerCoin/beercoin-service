@@ -1,4 +1,9 @@
 angular.module('app.services', ['ngResource', 'ui']).
+  filter("since", function(){
+    return function(date){
+      return moment(date).fromNow();
+    };
+  }).
   directive('twModal', function() {
     return {
       scope: true,
