@@ -9,3 +9,4 @@ local_settings.py
 build/*
 .DS_Store
 test.db
+settings_local.py
