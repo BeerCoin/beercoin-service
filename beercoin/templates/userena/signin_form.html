@@ -25,17 +25,19 @@
 		    <label for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
 		    </p>
 	    {% else %}
-		    <p>
+			<p>
 			    {% if field.errors %}
-				    <div class="alert alert-error">
-				    {{ field.errors }}
+				    <div class="control-group error">
+			    {% endif %}
+				    <div>
+					    {{ field.label_tag }}
+					    {{ field }}
+				    </div>
+			    {% if field.errors %}
+				    <div class="alert alert-error">{{ field.errors }}</div>
 				    </div>
 			    {% endif %}
-			    <div>
-				    {{ field.label_tag }}
-				    {{ field }}
-			    </div>
-		    </p>
+			</p>
 	    {% endif %}
 
     {% endfor %}
@@ -43,7 +45,11 @@
   </fieldset>
   <input class="btn btn-large btn-primary" type="submit" value="{% trans "Signin" %}" />
   <br/><br/>
-  <p class="forgot-password"><a href="{% url 'userena_password_reset' %}" title="{% trans 'Forgot your password?' %}">{% trans "Forgot your password?" %}</a></p>
+  <p class="forgot-password">
+  	<a href="{% url 'userena_password_reset' %}" title="{% trans 'Forgot your password?' %}">{% trans "Forgot your password?" %}</a>
+  	<br/>
+  	<a href="{% url 'userena_signup' %}" title="{% trans 'Signup' %}">{% trans "Sign up" %}</a> instead?
+  </p>
   {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 {% endblock %}

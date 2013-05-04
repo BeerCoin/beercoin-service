@@ -19,7 +19,7 @@ def check_login(request):
     if not request.user.is_authenticated():
         return {"success": False}
 
-    return {"success": True, "username": request.user.username}
+    return {"success": True, "username": request.user.username, "user": user_to_dict(request.user)}
 
 
 @as_json
