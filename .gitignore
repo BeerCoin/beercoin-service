@@ -12,3 +12,4 @@ test.db
 .pydevproject
 .project
 settings_local.py
+settings_production.py

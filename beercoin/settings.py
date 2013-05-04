@@ -67,21 +67,20 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+#STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
+    #os.path.join(BASE_DIR, "static/"),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
-
-print STATICFILES_DIRS
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -90,6 +89,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+USERENA_MUGSHOT_DEFAULT = "monsterid"
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '990g168dm9=wve#894v-grfy+whmw!p$$6u2s2%#eya-5i%qj3'
@@ -205,6 +206,8 @@ LOGGING = {
 #
 if os.path.exists(os.path.join(BASE_DIR, 'settings_local.py')):
     execfile(os.path.join(BASE_DIR, 'settings_local.py'))
+elif os.path.exists(os.path.join(BASE_DIR, 'settings_production.py')):
+    execfile(os.path.join(BASE_DIR, 'settings_production.py'))
 else:
 #
 # Required values for Heroku production environment
@@ -212,9 +215,11 @@ else:
     # Parse database configuration from $DATABASE_URL
     import dj_database_url
     DATABASES['default'] = dj_database_url.config()
-
+    STATIC_ROOT = '/app/beercoin/static'
     # Honor the 'X-Forwarded-Proto' header for request.is_secure()
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    DEBUG = True
+    TEMPLATE_DEBUG = DEBUG
 #
 # End production settings
 #
