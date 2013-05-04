@@ -12,12 +12,10 @@
 		</b>
 	</p>
 
-	<h2>Gone out 3 times in the last 5 months</h2>
+	<h2>Gone out {{(profile.actions|filter:{verb:"freed"}).length}} times in the last 5 months</h2>
 
 	<ul>
-		<li>Had 4 beers with <a href="people-profile.html">Abbey</a>, 2 days ago</li>
-		<li>Had 1 beer with <a href="people-profile.html">Ace</a>, 4 weeks ago</li>
-		<li>Had 2 beers with <a href="people-profile.html">Abbey</a>, 2 months ago</li>
+		<li ng-repeat="act in profile.actions">{{act.verb}} <span ng-show="act.object">{{act.object.username}}</span>, {{timestamp|since}}</li>
 	</ul>
 	
 	<h2>Actions</h2>
