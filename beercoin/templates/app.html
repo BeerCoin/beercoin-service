@@ -20,16 +20,27 @@
     </head>
     <body ng-app="app">
 
+    <div id="wrap">
+
         <div class="container">
 
           <div ng-view></div>
-          <hr>
 
+        </div> <!-- /container -->
+
+      <div id="push"></div>
+
+    </div>
+
+    <div id="footer">
+      <div class="container">
           <footer>
               <p>&copy; {{app_name}} 2012</p>
           </footer>
-        </div> <!-- /container -->
+      </div>
+    </div>
 
+{% block post_scripts %}
         <script src="/static/js/vendor/jquery-2.0.0.min.js"></script>
         <script src="/static/js/vendor/bootstrap.min.js"></script>
         <script src="/static/js/vendor/angular.min.js"></script>
@@ -38,6 +49,4 @@
         <script src="/static/js/vendor/bootstrap-editable-inline.min.js"></script>
 
         <script src="/static/js/app.js"></script>
-
-    </body>
-</html>
+{% endblock %}
