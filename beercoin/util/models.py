@@ -15,3 +15,4 @@ class UserProfile(UserenaBaseProfile):
 
     balance = models.IntegerField(default=0,
             help_text="your current balance")
+    location = models.TextField()
