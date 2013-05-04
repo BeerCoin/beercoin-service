@@ -78,8 +78,9 @@ var crowdbetApp = angular.module('app', ["app.services"]).
   }).run(function($location) {
     // checking for login and moving you to the login page if not
     $.getJSON("/api/v1/check_login", function(resp) {
+      console.log(resp);
       if (!resp.success){
-        document.location.href = "/accounts/signin/";
+        document.location.href = "/accounts/signin/?next=/#" + $location.path();
       }
     });
   })
