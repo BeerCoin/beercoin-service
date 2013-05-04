@@ -68,11 +68,11 @@ MEDIA_URL = ''
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
 #STATIC_ROOT = ''
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/static/'
+STATIC_URL = '/static2/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -88,7 +88,7 @@ print STATICFILES_DIRS
 # various locations.
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    #'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
@@ -206,6 +206,8 @@ LOGGING = {
 #
 if os.path.exists(os.path.join(BASE_DIR, 'settings_local.py')):
     execfile(os.path.join(BASE_DIR, 'settings_local.py'))
+elif os.path.exists(os.path.join(BASE_DIR, 'settings_production.py')):
+    execfile(os.path.join(BASE_DIR, 'settings_production.py'))
 else:
 #
 # Required values for Heroku production environment
@@ -213,7 +215,7 @@ else:
     # Parse database configuration from $DATABASE_URL
     import dj_database_url
     DATABASES['default'] = dj_database_url.config()
-
+    STATIC_ROOT = '/app/beercoin/static'
     # Honor the 'X-Forwarded-Proto' header for request.is_secure()
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     DEBUG = True
