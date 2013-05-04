@@ -52,9 +52,20 @@ var crowdbetApp = angular.module('app', ["app.services"]).
   config(function($routeProvider) {
      $routeProvider.
        when('/', {controller:"MainCtrl", templateUrl:'/static/tmpl/main.tmpl'}).
-// //      when('/edit/:projectId', {controller:EditCtrl, templateUrl:'detail.html'}).
-// //      when('/new', {controller:CreateCtrl, templateUrl:'detail.html'}).
+       when('/list', {controller:"ListCtrl", templateUrl:'/static/tmpl/list.tmpl'}).
+       when('/login', {controller:"LoginCtrl", templateUrl:'/static/tmpl/login.tmpl'}).
+       when('/profile', {controller:"ProfileCtrl", templateUrl:'/static/tmpl/profile.tmpl'}).
+       // when('/edit/:projectId', {controller:EditCtrl, templateUrl:'detail.html'}).
       otherwise({redirectTo:'/'});
+  }).
+  controller ("ListCtrl", function ($scope, $location, appState) {
+    // $scope.app_name = "My first angular App";
+  }).
+  controller ("LoginCtrl", function ($scope, $location, appState) {
+    // $scope.app_name = "My first angular App";
+  }).
+  controller ("ProfileCtrl", function ($scope, $location, appState) {
+    // $scope.app_name = "My first angular App";
   }).
   controller ("MainCtrl", function ($scope, $location, appState) {
     console.log("yay");
