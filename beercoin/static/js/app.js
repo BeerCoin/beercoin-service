@@ -83,6 +83,30 @@ var crowdbetApp = angular.module('app', ["app.services"]).
     $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
   	$scope.appState = appState;
     appState.loggedIn = true;
+    $scope.issue = function() {
+      // FIXME: disable button
+      $.getJSON("/api/v1/beercoin/issue?owner=" + $scope.profile.username, function(res) {
+        if (res.error) {
+          alert(res.message);
+          return;
+        }
+        var pf_name = $scope.profile.name;
+        $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
+        alert(pf_name + " says thanks.");
+      });
+    };
+    $scope.redeem = function() {
+      // FIXME: disable button
+      $.getJSON("/api/v1/beercoin/redeem?issuer=" + $scope.profile.username, function(res) {
+        if (res.error) {
+          alert(res.message);
+          return;
+        }
+        var pf_name = $scope.profile.name;
+        $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
+        alert(pf_name + " was happy to help.");
+      });
+    }
   }).
   controller ("OuterCtrl", function ($scope, $location, appState){
   	$scope.appState = appState;
