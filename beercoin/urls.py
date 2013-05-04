@@ -23,3 +23,8 @@ urlpatterns = patterns('',
     url(r'^0c308002f3737fbcb29960a2258cceeb.txt', TemplateView.as_view(template_name="empty.txt")),
     (r'^$', TemplateView.as_view(template_name="app.html")),
 )
+
+from django.conf import settings
+urlpatterns += patterns('',
+    (r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+)
