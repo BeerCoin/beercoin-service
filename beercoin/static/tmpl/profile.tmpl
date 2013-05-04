@@ -1,14 +1,14 @@
-	<h1>Profile of user XY</h1>
+	<h1>Profile of {{profile.name}}</h1>
 
 	<p>You can only do this if you are logged in. <a href="index-loggedin.html">Home</a> | <a href="index.html">Log out</a>.</p>
 
 	<p>
-		<img src="./images/user.png" width="150"/>
+		<img ng-src="{{profile.icon}}" width="150"/>
 		<br/>
 		<b>
-			Beer credits: +2
+			Beer credits: {{profile.balance}}
 			<br/>
-			Location: Berlin
+			Location: {{profile.location}}
 		</b>
 	</p>
 
