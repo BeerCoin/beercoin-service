@@ -1,26 +1,32 @@
 <div class="page-header">
-	<h1>Find people</h1>
+	<h1>
+		Find people
+		<span ng-switch on="!search.location">
+			<span ng-switch-when="false"> in {{search.location}}</span>
+		</span>
+	</h1>
 </div>
 
 <div class="well">
 	<form>
 		<fieldset>
-			Filter by location: <input type="text"/>
+			Filter by location: <input ng-model="search.location" type="text"/>
 			<br/>
-			Filter by credit <select><option>Has beers</option><option>In Debt</option></select>
-			<br/>
-	      <p>
-			<a href="#" class="btn btn-primary">Filter</a>
-	      </p>
+			Filter by credit:
+				<select ng-model="search.balance">
+					<option value="0">Don't mind</option>
+					<option value="1">Has beers</option>
+					<option value="2">In Debt</option>
+				</select>
 		</fieldset>
 	</form>
 </div>
 
 <ul class="thumbnails">
-	<div data-ng-repeat="profile in profiles">
+	<div data-ng-repeat="profile in profiles|filter:searcher">
 		<li class="span3">
 		    <div class="thumbnail">
-			  <img src="{{profile.icon}}" width="150"/>
+			  <a href="/#/profile/{{profile.username}}"><img src="{{profile.icon}}" width="100%"/></a>
 		      <h3>{{profile.name}}</h3>
 		      <h4>{{profile.location}} (Balance: {{profile.balance}} Beers)</h4>
 		      <p>

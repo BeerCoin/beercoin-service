@@ -65,8 +65,19 @@ var crowdbetApp = angular.module('app', ["app.services"]).
   }).
   controller ("ListCtrl", function ($scope, Profile, $location, appState) {
     // maybe we want to filter these some time
-    profiles = Profile.query();
-    $scope.profiles = profiles;
+    $scope.profiles = Profile.query();
+    $scope.search = {location:"", balance:0 };
+    $scope.searcher = function(item) {
+    	if (!$scope.search.location ||
+			($scope.search.location && item.location.toLowerCase().indexOf($scope.search.location.toLowerCase()) > -1) ) {
+    		
+    		if (!$scope.search.balance ||
+    			($scope.search.balance==1 && item.balance>0) || 
+    			($scope.search.balance==2 && item.balance<=0) ) {
+		    		return true;
+    			}
+    	}
+    }
     appState.loggedIn = true;
   }).
   controller ("LoginCtrl", function ($scope, $location, appState) {
