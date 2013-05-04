@@ -58,7 +58,7 @@ def issue_beercoin(request):
     what_for = request.GET.get("what_for", None)
     issuer = request.user
 
-    if isser.username == owner.username:
+    if issuer.username == owner.username:
         raise BeerCoinTransactionError("You can owe beers yourself")
 
     if issuer.profile.balance <= -10:
@@ -87,7 +87,7 @@ def redeem_beercoin(request):
     comment = request.GET.get("comment", None)
     owner = request.user
 
-    if isser.username == owner.username:
+    if issuer.username == owner.username:
         raise BeerCoinTransactionError("You can owe beers yourself")
 
     if owner.profile.balance <= 0:
