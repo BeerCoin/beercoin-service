@@ -53,7 +53,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
      $routeProvider.
        when('/', {controller:"MainCtrl", templateUrl:'/static/tmpl/main.tmpl'}).
        when('/list', {controller:"ListCtrl", templateUrl:'/static/tmpl/list.tmpl'}).
-       when('/login', {controller:"LoginCtrl", templateUrl:'/static/tmpl/login.tmpl'}).
+       when('/login', {controller:"LoginCtrl", templateUrl:'/accounts/signin/?next=/'}).
        when('/profile', {controller:"ProfileCtrl", templateUrl:'/static/tmpl/profile.tmpl'}).
        // when('/edit/:projectId', {controller:EditCtrl, templateUrl:'detail.html'}).
       otherwise({redirectTo:'/'});
@@ -63,6 +63,11 @@ var crowdbetApp = angular.module('app', ["app.services"]).
   }).
   controller ("LoginCtrl", function ($scope, $location, appState) {
     // $scope.app_name = "My first angular App";
+    $scope.$on('$viewContentLoaded', function() {
+      console.log("yay");
+      $("form").attr("action", "/accounts/signin/");
+
+    });
   }).
   controller ("ProfileCtrl", function ($scope, $location, appState) {
     // $scope.app_name = "My first angular App";
@@ -70,4 +75,12 @@ var crowdbetApp = angular.module('app', ["app.services"]).
   controller ("MainCtrl", function ($scope, $location, appState) {
     console.log("yay");
     $scope.app_name = "My first angular App";
-  });
+  }).run(function($location) {
+    // checking for login and moving you to the login page if not
+    $.getJSON("/api/v1/check_login", function(resp) {
+      if (!resp.success){
+        document.location.href = "/accounts/signin/";
+      }
+    });
+  })
+  ;
