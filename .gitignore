@@ -7,3 +7,4 @@ include/*
 local_settings.py
 .Python
 build/*
+.DS_Store
