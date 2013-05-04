@@ -145,7 +145,12 @@ var crowdbetApp = angular.module('app', ["app.services"]).
   }).
   controller ("MainCtrl", function ($scope, $location, appState) {
     $scope.app_name = "My first angular App";
+    $scope.show_popup = false;
     appState.loggedIn = true;
+    $scope.showPopup = function() {
+    	$scope.show_popup = !$scope.show_popup;
+    	console.log($scope.show_popup);
+    };
   }).run(function($location, pusher, appState) {
     // checking for login and moving you to the login page if not
     $.getJSON("/api/v1/check_login", function(resp) {
