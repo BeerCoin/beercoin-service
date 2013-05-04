@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from actstream import action
 
+class BeerCoinTransactionError(Exception):
+    pass
+
 def user_to_dict(user, profile=None):
     if not profile:
         profile = user.profile
@@ -45,8 +48,11 @@ def issue_beercoin(request):
     what_for = request.GET.get("what_for", None)
     issuer = request.user
 
-    if issuer.profile.balance < -10:
-        raise ValueError()   #fixme: make better
+    if isser.username == owner.username:
+        raise BeerCoinTransactionError("You can owe beers yourself")
+
+    if issuer.profile.balance <= -10:
+        raise BeerCoinTransactionError("You already owe a lot. Not acceptable.")   # fixme: make better
 
     owner.profile.balance += 1
     issuer.profile.balance -= 1
@@ -59,5 +65,34 @@ def issue_beercoin(request):
 
     if owner.profile.balance == -10:
         action.send(issuer, verb="reached limit")
+
+    return {"success": True}
+
+
+@transaction.commit_on_success
+@login_required
+@as_json
+def redeem_beercoin(request):
+    issuer = get_object_or_404(User, username=request.GET.get("issuer"))
+    comment = request.GET.get("comment", None)
+    owner = request.user
+
+    if isser.username == owner.username:
+        raise BeerCoinTransactionError("You can owe beers yourself")
+
+    if owner.profile.balance <= 0:
+        raise BeerCoinTransactionError("You can only redeem if you are in plus.") 
+
+    owner.profile.balance -= 1
+    issuer.profile.balance += 1
+
+    owner.profile.save()
+    issuer.profile.save()
+
+    action.send(owner, verb="redeemed", action_object=issuer,
+            comment=comment)
+
+    if issuer.profile.balance == 0:
+        action.send(issuer, verb="freed")
 
     return {"success": True}
