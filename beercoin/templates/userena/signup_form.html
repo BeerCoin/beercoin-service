@@ -1,0 +1,47 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<br/><br/>
+<form action="" method="post" class="form-signin">
+  {% csrf_token %}
+  <fieldset>
+    <h2 class="form-signin-heading">{% trans "Signup" %}</h2>
+
+    {% if form.non_field_errors %}
+	    <div class="alert alert-error">
+	    {{ form.non_field_errors }}
+	    </div>
+    {% endif %}
+
+    {% for field in form %}
+	    {% comment %} Displaying checkboxes differently {% endcomment %}
+	    {% if field.name == 'tos' %}
+		    <p class="checkbox">
+		    <label for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
+		    </p>
+	    {% else %}
+		    <p>
+			    {% if field.errors %}
+				    <div class="alert alert-error">
+				    {{ field.errors }}
+				    </div>
+			    {% endif %}
+			    <div>
+				    {{ field.label_tag }}
+				    {{ field }}
+			    </div>
+		    </p>
+	    {% endif %}
+
+    {% endfor %}
+
+  <input class="btn btn-large btn-primary" type="submit" value="{% trans "Signup"%}" />
+  </fieldset>
+  <br/><br/>
+  Already have an account? <a href="/accounts/signin">Sign in</a> instead. 
+  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+</form>
+{% endblock %}

@@ -9,4 +9,6 @@ local_settings.py
 build/*
 .DS_Store
 test.db
+.pydevproject
+.project
 settings_local.py
