@@ -11,3 +11,4 @@ build/*
 test.db
 .pydevproject
 .project
+settings_local.py
