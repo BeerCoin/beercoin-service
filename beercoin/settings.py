@@ -142,9 +142,8 @@ INSTALLED_APPS = (
     'userena',
     'guardian',
     'easy_thumbnails',
-    'user_streams',
+    'actstream',
     'south',
-    'user_streams.backends.user_streams_single_table_backend',
     'beercoin.beercoin',
     'beercoin.util',
     # Uncomment the next line to enable the admin:
@@ -152,9 +151,13 @@ INSTALLED_APPS = (
     
 )
 
-
-USER_STREAMS_BACKEND = 'user_streams.backends.user_streams_single_table_backend.SingleTableDatabaseBackend'
-
+ACTSTREAM_SETTINGS = {
+    'MODELS': ('auth.user', 'auth.group', 'sites.site', 'comments.comment'),
+    'FETCH_RELATIONS': True,
+    'USE_PREFETCH': True,
+    'USE_JSONFIELD': True,
+    'GFK_FETCH_DEPTH': 1,
+}
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
