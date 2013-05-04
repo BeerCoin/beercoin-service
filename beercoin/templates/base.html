@@ -23,10 +23,9 @@
         <div class="container">
 
 		    {% block body %}
-		      <div class="content_title">
-		        {% block content_title %}{% endblock %}
-		      </div>
 		      <div class="content">
+				{% block content_navigation %}{% endblock %}
+				{% block content_title %}{% endblock %}
 		        {% block content %}{% endblock %}
 		      </div>
 		    {% endblock %}

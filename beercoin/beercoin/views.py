@@ -7,6 +7,10 @@ from django.db import transaction
 from actstream import action
 from actstream.models import following, followers, actor_stream
 
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.template import Context
+from django.conf import settings
 
 class BeerCoinTransactionError(Exception):
     pass
@@ -27,7 +31,7 @@ def check_login(request):
     if not request.user.is_authenticated():
         return {"success": False}
 
-    return {"success": True, "username": request.user.username}
+    return {"success": True, "username": request.user.username, "user": user_to_dict(request.user)}
 
 
 @login_required
@@ -104,5 +108,25 @@ def redeem_beercoin(request):
 
     if issuer.profile.balance == 0:
         action.send(issuer, verb="freed")
+
+    return {"success": True}
+
+@login_required
+@as_json
+def request_beercoin_redemption(request):
+    issuer = request.user
+    owner = get_object_or_404(User, username=request.GET.get("owner"))
+
+    text_template = get_template('emails/request_beercoin_redemption.txt')
+    #html_template = get_template('emails/request_beercoin_redemption.html')
+
+    context_vars = Context({ 'owner': owner, 'issuer': issuer, })
+
+    text_content = text_template.render(context_vars)
+    #html_content = html_template.render(context_vars)
+    msg = EmailMultiAlternatives('You owe me a beer', text_content, settings.DEFAULT_FROM_EMAIL, [owner.email])
+    #msg.attach_alternative(html_content, "text/html")
+    msg.send()
+
 
     return {"success": True}

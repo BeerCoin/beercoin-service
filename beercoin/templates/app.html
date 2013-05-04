@@ -23,7 +23,12 @@
     <div id="wrap">
 
         <div class="container">
-
+        	<div ng-controller="OuterCtrl">
+			  <span ng-switch on="appState.loggedIn">
+				<div ng-switch-when="true" ng-include src="'/static/tmpl/header_logged_in.tmpl'"></div>
+				<div ng-switch-default ng-include src="'/static/tmpl/header_login.tmpl'"></div>
+			  </span>
+		    </div>
           <div ng-view></div>
 
         </div> <!-- /container -->

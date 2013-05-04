@@ -53,40 +53,47 @@ angular.module('app.services', ['ngResource', 'ui']).
     };
   }).
   service('appState', function(){
-
+  	return {
+  		loggedIn: false
+  	};
   });
 
 var crowdbetApp = angular.module('app', ["app.services"]).
   config(function($routeProvider) {
      $routeProvider.
        when('/', {controller:"MainCtrl", templateUrl:'/static/tmpl/main.tmpl'}).
-       when('/list', {controller:"ListCtrl", templateUrl:'/static/tmpl/list.tmpl'}).
        when('/login', {controller:"LoginCtrl", templateUrl:'/accounts/signin/?next=/'}).
+       when('/profiles', {controller:"ListCtrl", templateUrl:'/static/tmpl/profiles.tmpl'}).
        when('/profile/:profileName', {controller:"ProfileCtrl", templateUrl:'/static/tmpl/profile.tmpl'}).
        // when('/edit/:projectId', {controller:EditCtrl, templateUrl:'detail.html'}).
       otherwise({redirectTo:'/'});
   }).
   controller ("ListCtrl", function ($scope, Profile, $location, appState) {
-    // $scope.app_name = "My first angular App";
-    $scope.profiles = Profile.query();
+    // maybe we want to filter these some time
+    profiles = Profile.query();
+    $scope.profiles = profiles;
+    appState.loggedIn = true;
   }).
   controller ("LoginCtrl", function ($scope, $location, appState) {
-    // $scope.app_name = "My first angular App";
     $scope.$on('$viewContentLoaded', function() {
       $("form").attr("action", "/accounts/signin/");
-
     });
   }).
   controller ("ProfileCtrl", function ($scope, Profile, $route, $location, appState) {
     $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
+  	$scope.appState = appState;
+    appState.loggedIn = true;
+  }).
+  controller ("OuterCtrl", function ($scope, $location, appState){
+  	$scope.appState = appState;
   }).
   controller ("MainCtrl", function ($scope, $location, appState) {
-    console.log("yay");
     $scope.app_name = "My first angular App";
-  }).run(function($location) {
+    appState.loggedIn = true;
+  }).run(function($location, appState) {
     // checking for login and moving you to the login page if not
     $.getJSON("/api/v1/check_login", function(resp) {
-      console.log(resp);
+      appState.user = resp.user;
       if (!resp.success){
         document.location.href = "/accounts/signin/?next=/#" + $location.path();
       }
