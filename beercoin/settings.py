@@ -8,7 +8,7 @@ TEMPLATE_DEBUG = DEBUG
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Ben', 'ben.kampmann+beercoin@gmail.com'),
 )
 
 DEFAULT_FROM_EMAIL = "no-reply@beercoin.me"
