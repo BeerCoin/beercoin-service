@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^api/v1/beercoin/issue', 'beercoin.beercoin.views.issue_beercoin'),
     url(r'^api/v1/profile/$', 'beercoin.beercoin.views.list_profiles'),
     url(r'^api/v1/profile/(?P<profile_name>.*)$', 'beercoin.beercoin.views.get_profile'),
     url(r'^api/v1/check_login', 'beercoin.beercoin.views.check_login'),
