@@ -1,0 +1,6 @@
+Hi
+
+{{issuer.name}} asked, if you'd like to go for beers with them. If interested please send an email to {{issuer.email}}.
+
+Happy Beer-ing!
+

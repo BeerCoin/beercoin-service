@@ -12,6 +12,15 @@ from django.template.loader import get_template
 from django.template import Context
 from django.conf import settings
 
+
+import pusher
+pusher.app_id = settings.PUSHER_APP_ID
+pusher.key = settings.PUSHER_APP_KEY
+pusher.secret = settings.PUSHER_APP_SECRET
+
+pushy = pusher.Pusher()
+
+
 class BeerCoinTransactionError(Exception):
     pass
 
@@ -84,6 +93,35 @@ def issue_beercoin(request):
     return {"success": True}
 
 
+@login_required
+@as_json
+def ask_out(request):
+    issuer = request.user
+    user = get_object_or_404(User, username=request.GET.get("user"))
+
+    text_template = get_template('emails/ask_to_go_for_beer.txt')
+    #html_template = get_template('emails/request_beercoin_redemption.html')
+
+    context_vars = Context({ 'user': user, 'issuer': issuer})
+
+    text_content = text_template.render(context_vars)
+    #html_content = html_template.render(context_vars)
+    msg = EmailMultiAlternatives('Wanna go for a beer?', text_content, settings.DEFAULT_FROM_EMAIL, [user.email])
+    #msg.attach_alternative(html_content, "text/html")
+    msg.send()
+
+    try:
+        pushy["user_" + user.username].trigger("msg", {
+                "type": "ask_out",
+                "message": "Wanna go for a beer?",
+                "from": user_to_dict(issuer)
+            });
+    except Exception:
+        pass
+
+    return {"success": True}
+
+
 @transaction.commit_on_success
 @login_required
 @as_json
@@ -121,7 +159,7 @@ def request_beercoin_redemption(request):
     text_template = get_template('emails/request_beercoin_redemption.txt')
     #html_template = get_template('emails/request_beercoin_redemption.html')
 
-    context_vars = Context({ 'owner': owner, 'issuer': issuer, })
+    context_vars = Context({ 'owner': owner, 'issuer': issuer})
 
     text_content = text_template.render(context_vars)
     #html_content = html_template.render(context_vars)
@@ -129,5 +167,13 @@ def request_beercoin_redemption(request):
     #msg.attach_alternative(html_content, "text/html")
     msg.send()
 
+    try:
+        pushy["user_" + owner.username].trigger("msg", {
+                "type": "owe",
+                "message": "Hey, you owe me a beer",
+                "from": user_to_dict(issuer)
+            });
+    except Exception:
+        pass
 
     return {"success": True}

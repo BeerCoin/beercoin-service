@@ -22,8 +22,12 @@
 
 				<button ng-click="issue()" class="btn btn-primary btn-huge">I owe them a beer</button>
 			</div>
-			<div class="span4">
+			<div class="span4" ng-show="$parent.appState.user.balance > 0">
 				<button ng-click="redeem()" class="btn btn-primary btn-huge">They gave me my beer</button>
+			</div>
+			<div class="span4">
+
+				<button ng-click="ask()" class="btn btn-success btn-huge">Let's go for a Beer!</button>
 			</div>
 		</div>
 	</div>

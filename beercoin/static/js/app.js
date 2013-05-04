@@ -4,6 +4,10 @@ angular.module('app.services', ['ngResource', 'ui']).
       return moment(date).fromNow();
     };
   }).
+  factory('pusher', function() {
+    var pusher = new Pusher('20adaedfdf8be72a2ed9');
+    return pusher;
+  }).
   directive('twModal', function() {
     return {
       scope: true,
@@ -92,7 +96,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
   }).
   controller ("ProfileCtrl", function ($scope, Profile, $route, $location, appState) {
     $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
-  	$scope.appState = appState;
+    $scope.appState = appState;
     appState.loggedIn = true;
     $scope.issue = function() {
       // FIXME: disable button
@@ -117,7 +121,20 @@ var crowdbetApp = angular.module('app', ["app.services"]).
         $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
         alert(pf_name + " was happy to help.");
       });
-    }
+    };
+
+    $scope.ask = function() {
+      // FIXME: disable button
+      $.getJSON("/api/v1/social/ask?user=" + $scope.profile.username, function(res) {
+        if (res.error) {
+          alert(res.message);
+          return;
+        }
+        var pf_name = $scope.profile.name;
+        $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
+        alert(pf_name + " received your message.");
+      });
+    };
   }).
   controller ("OuterCtrl", function ($scope, $location, appState){
   	$scope.appState = appState;
@@ -125,13 +142,18 @@ var crowdbetApp = angular.module('app', ["app.services"]).
   controller ("MainCtrl", function ($scope, $location, appState) {
     $scope.app_name = "My first angular App";
     appState.loggedIn = true;
-  }).run(function($location, appState) {
+  }).run(function($location, pusher, appState) {
     // checking for login and moving you to the login page if not
     $.getJSON("/api/v1/check_login", function(resp) {
       appState.user = resp.user;
       if (!resp.success){
         document.location.href = "/accounts/signin/?next=/#" + $location.path();
       }
+
+      var channel = pusher.subscribe('user_' + appState.user.username);
+      channel.bind('msg', function(data) {
+        alert(data);
+      });
     });
   })
   ;
