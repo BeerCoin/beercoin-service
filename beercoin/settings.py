@@ -11,6 +11,8 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+DEFAULT_FROM_EMAIL = "no-reply@beercoin.me"
+
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -154,6 +156,13 @@ INSTALLED_APPS = (
 LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
 LOGIN_URL = '/accounts/signin/'
 LOGOUT_URL = '/accounts/signout/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "in.mailjet.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get("MAILJET_KEY")
+EMAIL_HOST_PASSWORD = os.environ.get("MAILJET_SECRET")
+EMAIL_USE_TLS = True
 
 ACTSTREAM_SETTINGS = {
     'MODELS': ('auth.user', 'auth.group', 'sites.site', 'comments.comment'),
