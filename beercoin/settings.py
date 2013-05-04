@@ -206,6 +206,9 @@ else:
 
     # Honor the 'X-Forwarded-Proto' header for request.is_secure()
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    STATIC_ROOT= os.path.join(BASE_DIR,'staticfiles/')
+    DEBUG = False
+    TEMPLATE_DEBUG = DEBUG
 #
 # End production settings
 #
