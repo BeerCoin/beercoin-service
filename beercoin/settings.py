@@ -11,6 +11,8 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+DEFAULT_FROM_EMAIL = "no-reply@beercoin.me"
+
 MANAGERS = ADMINS
 
 DATABASES = {
