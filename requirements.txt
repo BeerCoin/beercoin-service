@@ -1,0 +1,6 @@
+Django==1.5.1
+django-guardian==1.1.0.beta
+django-user-streams==0.6.0
+django-userena==1.2.0
+easy-thumbnails==1.2
+wsgiref==0.1.2
