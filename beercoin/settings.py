@@ -102,16 +102,27 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+ANONYMOUS_USER_ID = -1
 ROOT_URLCONF = 'beercoin.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'beercoin.wsgi.application'
+
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+AUTH_PROFILE_MODULE = "util.UserProfile"
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -120,11 +131,21 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'userena',
+    'guardian',
+    'easy_thumbnails',
+    'user_streams',
+    'south',
+    'user_streams.backends.user_streams_single_table_backend',
+    'beercoin.beercoin',
+    'beercoin.util',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admin',
+    
 )
+
+
+USER_STREAMS_BACKEND = 'user_streams.backends.user_streams_single_table_backend.SingleTableDatabaseBackend'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
