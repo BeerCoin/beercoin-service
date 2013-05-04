@@ -17,6 +17,6 @@ urlpatterns = patterns('',
     url(r'^activity/', include('actstream.urls')),
     url(r'^accounts/', include('userena.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^0c308002f3737fbcb29960a2258cceeb.txt', TemplateView.as_view(template_name="empty.txt"))
+    url(r'^0c308002f3737fbcb29960a2258cceeb.txt', TemplateView.as_view(template_name="empty.txt")),
     (r'^$', TemplateView.as_view(template_name="app.html")),
 )
