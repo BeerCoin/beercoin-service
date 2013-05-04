@@ -50,5 +50,5 @@
 	<h2>Gone out {{(profile.actions|filter:{verb:"freed"}).length}} times in the last 5 months</h2>
 
 	<ul>
-		<li ng-repeat="act in profile.actions">{{act.verb}} <span ng-show="act.object">{{act.object.username}}</span>, {{timestamp|since}}</li>
+		<li ng-repeat="action in profile.actions"><div ng-include="" src="'/static/tmpl/formatted_actions.tmpl'"></li>
 	</ul>

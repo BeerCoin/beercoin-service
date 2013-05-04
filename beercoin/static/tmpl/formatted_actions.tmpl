@@ -1,0 +1,12 @@
+<ng-switch on="action.verb">
+
+	<div ng-switch-when="freed">
+		went out with {{action.object.username}}, who gave them a beer, {{timestamp|since}}. {{action.data.comment}}
+	</div>
+
+	<div ng-switch-when="issued">
+		owes {{action.object.username}} a beer <span ng-show="{{action.data.for_what}}">for {{action.data.for_what}}</span>, {{timestamp|since}}.
+		{{action.data.comment}}
+	</div>
+
+</ng-switch>
