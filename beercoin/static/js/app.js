@@ -76,7 +76,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
     	if (!$scope.search.location ||
 			($scope.search.location && item.location.toLowerCase().indexOf($scope.search.location.toLowerCase()) > -1) ) {
     		
-    		if (!$scope.search.balance ||
+    		if (!$scope.search.balance || $scope.search.balance==0 ||
     			($scope.search.balance==1 && item.balance>0) || 
     			($scope.search.balance==2 && item.balance<=0) ) {
 		    		return true;
@@ -98,24 +98,28 @@ var crowdbetApp = angular.module('app', ["app.services"]).
       // FIXME: disable button
       $.getJSON("/api/v1/beercoin/issue?owner=" + $scope.profile.username, function(res) {
         if (res.error) {
-          alert(res.message);
+        	$('#thankYouModal .modal-body P').html(res.message);
+        	$('#thankYouModal').modal();
           return;
         }
         var pf_name = $scope.profile.name;
         $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
-        alert(pf_name + " says thanks.");
+       	$('#thankYouModal .modal-body P').html(pf_name + " says thanks. You are awesome!");
+       	$('#thankYouModal').modal();
       });
     };
     $scope.redeem = function() {
       // FIXME: disable button
       $.getJSON("/api/v1/beercoin/redeem?issuer=" + $scope.profile.username, function(res) {
         if (res.error) {
-          alert(res.message);
+        	$('#thankYouModal .modal-body P').html(res.message);
+        	$('#thankYouModal').modal();
           return;
         }
         var pf_name = $scope.profile.name;
         $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
-        alert(pf_name + " was happy to help.");
+       	$('#thankYouModal .modal-body P').html(pf_name + " was happy to help. You are awesome!");
+       	$('#thankYouModal').modal();
       });
     }
   }).
