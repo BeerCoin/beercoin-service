@@ -1,16 +1,51 @@
+<div class="page-header">
 	<h1>Profile of {{profile.name}}</h1>
+</div>
 
-	<p>You can only do this if you are logged in. <a href="index-loggedin.html">Home</a> | <a href="index.html">Log out</a>.</p>
-
-	<p>
-		<img ng-src="{{profile.icon}}" width="150"/>
-		<br/>
+<div class="row">
+	<div class="span2">
+	    <div class="thumbnail">
+			<img ng-src="{{profile.icon}}" width="200"/>
+	    </div>
+	</div>
+	<div class="span2">
 		<b>
 			Beer credits: {{profile.balance}}
 			<br/>
 			Location: {{profile.location}}
 		</b>
-	</p>
+	</div>
+	
+	<div ng-switch on="appState.user.username!=profile.name">
+		<div ng-switch-when="true">
+			<div class="span4">
+				<form class="well">
+					<fieldset>
+						We have just been out.
+						<br/><br/>
+						<select><option>I paid</option><option>I got</option></select>
+						<select><option>1</option><option>2</option><option>3</option></select>
+						Beers
+						<br/><br/>
+						<input type="button" value="Do it!"/>
+					</fieldset>
+				</form>
+			</div>
+			<div class="span4">
+				<form class="well">
+					<fieldset>
+						I want to owe this person
+						<br/><br/>
+						<select><option>1</option><option>2</option><option>3</option></select>
+						Beers
+						<br/><br/>
+						<input type="button" value="Do it!"/>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 	<h2>Gone out 3 times in the last 5 months</h2>
 
@@ -19,30 +54,3 @@
 		<li>Had 1 beer with <a href="people-profile.html">Ace</a>, 4 weeks ago</li>
 		<li>Had 2 beers with <a href="people-profile.html">Abbey</a>, 2 months ago</li>
 	</ul>
-	
-	<h2>Actions</h2>
-
-	<form>
-		<fieldset>
-			We have just been out.
-			<br/><br/>
-			<select><option>I paid</option><option>I got</option></select>
-			<select><option>1</option><option>2</option><option>3</option></select>
-			Beers
-			<br/><br/>
-			<input type="button" value="Do it!"/>
-		</fieldset>
-	</form>
-
-	<br/>
-
-	<form>
-		<fieldset>
-			I want to owe this person
-			<br/><br/>
-			<select><option>1</option><option>2</option><option>3</option></select>
-			Beers
-			<br/><br/>
-			<input type="button" value="Do it!"/>
-		</fieldset>
-	</form>

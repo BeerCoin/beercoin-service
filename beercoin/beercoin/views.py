@@ -28,7 +28,7 @@ def check_login(request):
     if not request.user.is_authenticated():
         return {"success": False}
 
-    return {"success": True, "username": request.user.username}
+    return {"success": True, "username": request.user.username, "user": user_to_dict(request.user)}
 
 
 @login_required
@@ -85,7 +85,7 @@ def redeem_beercoin(request):
         raise BeerCoinTransactionError("You can owe beers yourself")
 
     if owner.profile.balance <= 0:
-        raise BeerCoinTransactionError("You can only redeem if you are in plus.")
+        raise BeerCoinTransactionError("You can only redeem if you are in plus.") 
 
     owner.profile.balance -= 1
     issuer.profile.balance += 1
