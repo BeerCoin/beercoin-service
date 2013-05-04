@@ -151,6 +151,10 @@ INSTALLED_APPS = (
     
 )
 
+LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
+LOGIN_URL = '/accounts/signin/'
+LOGOUT_URL = '/accounts/signout/'
+
 ACTSTREAM_SETTINGS = {
     'MODELS': ('auth.user', 'auth.group', 'sites.site', 'comments.comment'),
     'FETCH_RELATIONS': True,
