@@ -24,6 +24,9 @@ angular.module('app.services', ['ngResource', 'ui']).
         }
       };
   }).
+  factory("Profile", function($resource) {
+    return $resource('/api/v1/profile/:profileId', {profileId:'@username'});
+  }).
   directive('editable', function() {
     return {
       require: 'ngModel',
@@ -54,23 +57,24 @@ var crowdbetApp = angular.module('app', ["app.services"]).
        when('/', {controller:"MainCtrl", templateUrl:'/static/tmpl/main.tmpl'}).
        when('/list', {controller:"ListCtrl", templateUrl:'/static/tmpl/list.tmpl'}).
        when('/login', {controller:"LoginCtrl", templateUrl:'/accounts/signin/?next=/'}).
-       when('/profile', {controller:"ProfileCtrl", templateUrl:'/static/tmpl/profile.tmpl'}).
+       when('/profile/:profileName', {controller:"ProfileCtrl", templateUrl:'/static/tmpl/profile.tmpl'}).
        // when('/edit/:projectId', {controller:EditCtrl, templateUrl:'detail.html'}).
       otherwise({redirectTo:'/'});
   }).
-  controller ("ListCtrl", function ($scope, $location, appState) {
+  controller ("ListCtrl", function ($scope, Profile, $location, appState) {
     // $scope.app_name = "My first angular App";
+    $scope.profiles = Profile.query();
   }).
   controller ("LoginCtrl", function ($scope, $location, appState) {
     // $scope.app_name = "My first angular App";
     $scope.$on('$viewContentLoaded', function() {
-      console.log("yay");
       $("form").attr("action", "/accounts/signin/");
 
     });
   }).
-  controller ("ProfileCtrl", function ($scope, $location, appState) {
+  controller ("ProfileCtrl", function ($scope, Profile, $route, $location, appState) {
     // $scope.app_name = "My first angular App";
+    $scope.profile = Profile.get({profileId: $route.routeParams["profileName"]});
   }).
   controller ("MainCtrl", function ($scope, $location, appState) {
     console.log("yay");

@@ -1,8 +1,10 @@
 # Create your views here.
 from beercoin.util import as_json
-from beercoin.util.models import UserProfile
+from django.shortcuts import get_object_or_404
+from beercoin.util.models import UserProfile, User
 
-def user_to_dict(user, profile):
+
+def user_to_dict(user, profile=None):
     if not profile:
         profile = user.profile
     return dict(username=user.username,
@@ -21,6 +23,13 @@ def check_login(request):
 
 
 @as_json
-def get_profiles(request):
+def list_profiles(request):
     queryset = UserProfile.objects.get_visible_profiles(request.user)
     return [user_to_dict(x.user, x) for x in queryset]
+
+
+@as_json
+def get_profile(request, profile_name):
+    print profile_name
+    user = get_object_or_404(User, username=profile_name)
+    return user_to_dict(user)
