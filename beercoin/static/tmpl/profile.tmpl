@@ -19,11 +19,18 @@
 	<div ng-switch on="appState.user.username!=profile.name">
 		<div ng-switch-when="true">
 			<div class="span4">
-
-				<button ng-click="issue()" class="btn btn-primary btn-huge">I owe them a beer</button>
+				<div class="well text-center">
+					<img src="/static/img/beer_got.png" ng-click="redeem()"/>
+					<br/><br/>
+					<button ng-click="redeem()" class="btn btn-primary btn-huge">They gave me my beer</button>
+				</div>
 			</div>
 			<div class="span4" ng-show="$parent.appState.user.balance > 0">
-				<button ng-click="redeem()" class="btn btn-primary btn-huge">They gave me my beer</button>
+				<div class="well text-center">
+					<img src="/static/img/beer_gave.png" ng-click="issue()"/>
+					<br/><br/>
+					<button ng-click="issue()" class="btn btn-primary btn-huge">I owe them a beer</button>
+				</div>
 			</div>
 			<div class="span4">
 
@@ -35,6 +42,22 @@
 
 	<h2>Gone out {{(profile.actions|filter:{verb:"freed"}).length}} times in the last 5 months</h2>
 
-	<ul>
-		<li ng-repeat="action in profile.actions"><div ng-include="" src="'/static/tmpl/formatted_actions.tmpl'"></li>
-	</ul>
+<ul class="media-list">
+	<li ng-repeat="action in profile.actions" class="media"><div ng-include="" src="'/static/tmpl/formatted_actions.tmpl'"></li>
+</ul>
+
+<!-- Modal -->
+<div id="thankYouModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="thankYouModal">Thank you!</h3>
+  </div>
+  <div class="modal-body">
+    <p>You are awesome.</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">I know, I know</button>
+  </div>
+</div>
+
+<br/><br/>
