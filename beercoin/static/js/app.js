@@ -51,11 +51,12 @@ angular.module('app.services', ['ngResource', 'ui']).
 var crowdbetApp = angular.module('app', ["app.services"]).
   config(function($routeProvider) {
      $routeProvider.
-//       when('/', {controller:MainCtrl, templateUrl:'main.html'}).
+       when('/', {controller:"MainCtrl", templateUrl:'/static/tmpl/main.tmpl'}).
 // //      when('/edit/:projectId', {controller:EditCtrl, templateUrl:'detail.html'}).
 // //      when('/new', {controller:CreateCtrl, templateUrl:'detail.html'}).
       otherwise({redirectTo:'/'});
   }).
   controller ("MainCtrl", function ($scope, $location, appState) {
+    console.log("yay");
     $scope.app_name = "My first angular App";
   });
