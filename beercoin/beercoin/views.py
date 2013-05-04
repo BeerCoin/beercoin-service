@@ -43,15 +43,16 @@ def list_profiles(request):
 @login_required
 @as_json
 def get_profile(request, profile_name):
-    user = user_to_dict(get_object_or_404(User, username=profile_name))
-    user["following"] = following(request.user)
-    user["followers"] = followers(request.user)
-    user["actions"] = [dict(verb=x.verb,
-                            object=x.action_object and user_to_dict(x.action_object),
-                            when=x.timestamp.strftime("%s"),
-                            data=x.data)
-                        for x in actor_stream(request.user)[:3]]
-    return user
+    user = get_object_or_404(User, username=profile_name)
+    user_d = user_to_dict(get_object_or_404(User, username=profile_name))
+    user_d["following"] = following(user)
+    user_d["followers"] = followers(user)
+    user_d["actions"] = [dict(verb=x.verb,
+                              object=x.action_object and user_to_dict(x.action_object),
+                              when=x.timestamp.strftime("%s"),
+                              data=x.data)
+                         for x in actor_stream(user)[:3]]
+    return user_d
 
 @transaction.commit_on_success
 @login_required
