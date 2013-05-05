@@ -48,7 +48,23 @@
   
   {% csrf_token %}
   <fieldset>
-    {{ form.as_p }}
+
+    {% for field in form %}
+		<p>
+		    {% if field.errors %}
+			    <div class="control-group error">
+		    {% endif %}
+			    <div>
+				    {{ field.label_tag }}
+				    {{ field }}
+			    </div>
+		    {% if field.errors %}
+			    <div class="alert alert-error">{{ field.errors }}</div>
+			    </div>
+		    {% endif %}
+		</p>
+    {% endfor %}
+
   </fieldset>
   <input type="submit" value="{% trans "Save changes" %}" class="btn btn-primary"/>
 </form>
