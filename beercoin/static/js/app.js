@@ -144,6 +144,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
        	  $('#thankYouModal').modal();
           return;
         }
+        $scope.inputComment = "";
         var pf_name = $scope.profile.name;
         $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
         $('#letsGoModal').modal('hide');
