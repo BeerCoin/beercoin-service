@@ -86,7 +86,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
     		
     		if (!$scope.search.balance || $scope.search.balance==0 ||
     			($scope.search.balance==1 && item.balance>0) || 
-    			($scope.search.balance==2 && item.balance<=0) ) {
+    			($scope.search.balance==2 && item.balance<0) ) {
 		    		return true;
     			}
     	}
