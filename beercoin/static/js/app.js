@@ -1,7 +1,7 @@
 angular.module('app.services', ['ngResource', 'ui']).
   filter("since", function(){
-    return function(date){
-      return moment(date).fromNow();
+    return function(input){
+      return moment(input).fromNow();
     };
   }).
   factory('pusher', function() {

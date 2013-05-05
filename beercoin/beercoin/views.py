@@ -76,7 +76,7 @@ def issue_beercoin(request):
     issuer = request.user
 
     if issuer.username == owner.username:
-        raise BeerCoinTransactionError("You can owe beers yourself")
+        raise BeerCoinTransactionError("You can't owe beers yourself")
 
     if issuer.profile.balance <= -10:
         raise BeerCoinTransactionError("You already owe a lot. Not acceptable.")   # fixme: make better
@@ -134,7 +134,7 @@ def redeem_beercoin(request):
     owner = request.user
 
     if issuer.username == owner.username:
-        raise BeerCoinTransactionError("You can owe beers yourself")
+        raise BeerCoinTransactionError("You can't owe beers yourself")
 
     if owner.profile.balance <= 0:
         raise BeerCoinTransactionError("You can only redeem if you are in plus.")
@@ -170,7 +170,6 @@ def request_beercoin_redemption(request):
     #msg.attach_alternative(html_content, "text/html")
     msg.send()
 
-    print "sent email"
 
     try:
         pushy["user_" + owner.username].trigger("msg", {
