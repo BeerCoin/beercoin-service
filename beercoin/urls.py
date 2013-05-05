@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
 from beercoin.forms import EditProfileFormExtra
+from django.http import HttpResponseRedirect
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -22,6 +23,8 @@ urlpatterns = patterns('',
     url(r'^api/v1/check_login', 'beercoin.beercoin.views.check_login'),
     url(r'^activity/', include('actstream.urls')),
     # Edit profile
+    (r'^accounts/(?P<username>[\.\w]+)/$', lambda x, username: HttpResponseRedirect("/#/profile/" + username)),
+    (r'^accounts/(?P<username>[\.\w]+)/signup/complete', lambda x, username: HttpResponseRedirect("/#/profiles")),
     (r'^accounts/(?P<username>[\.\w]+)/edit/$',
        'userena.views.profile_edit',
          {'edit_profile_form': EditProfileFormExtra}),
