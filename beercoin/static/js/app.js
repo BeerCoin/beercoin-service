@@ -133,6 +133,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
 
     $scope.ask = function() {
       // FIXME: disable button
+      console.log($scope.inputComment);
       $.getJSON("/api/v1/social/ask?user=" + $scope.profile.username, function(res) {
         if (res.error) {
        	  $('#thankYouModal .modal-body P').html(res.message);
