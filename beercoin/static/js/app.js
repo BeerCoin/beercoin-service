@@ -72,6 +72,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
        // when('/', {controller:"MainCtrl", templateUrl:'/static/tmpl/main.tmpl'}).
        when('/login', {controller:"LoginCtrl", templateUrl:'/accounts/signin/?next=/'}).
        when('/profiles', {controller:"ListCtrl", templateUrl:'/static/tmpl/profiles.tmpl'}).
+       when('/about', {controller:"AboutCtrl", templateUrl:'/static/tmpl/about.tmpl'}).
        when('/profile/:profileName', {controller:"ProfileCtrl", templateUrl:'/static/tmpl/profile.tmpl'}).
        // when('/edit/:projectId', {controller:EditCtrl, templateUrl:'detail.html'}).
       otherwise({redirectTo:'/profiles'});
@@ -97,6 +98,9 @@ var crowdbetApp = angular.module('app', ["app.services"]).
     $scope.$on('$viewContentLoaded', function() {
       $("form").attr("action", "/accounts/signin/");
     });
+  }).
+  controller ("AboutCtrl", function ($scope, $location, appState) {
+    appState.loggedIn = true;
   }).
   controller ("ProfileCtrl", function ($scope, Profile, $route, $location, appState) {
     $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});

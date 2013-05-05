@@ -1,0 +1,160 @@
+<div class="page-header">
+	<h1>Profile of {{profile.name}}</h1>
+	<h2>In {{profile.location}}, balance: {{profile.balance}} beers</h2>
+	<div ng-switch on="appState.user.username==profile.username">
+		<div ng-switch-when="true"><a href="/accounts/{{profile.username}}/edit">Edit your profile</a></div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span3">
+	    <div class="thumbnail">
+			<img ng-src="{{profile.icon}}" width="100%"/>
+	    </div>
+	</div>
+	<div ng-switch on="appState.user.username!=profile.username">
+		<div ng-switch-when="true">
+			<div class="span3" ng-show="$parent.appState.user.balance > 0">
+				<div class="well text-center">
+					<img src="/static/img/beer_got.png"/>
+					<br/><br/>
+					<a href="#gaveMeModal" role="button" class="btn btn-primary" data-toggle="modal">They gave me a beer!</a>
+				</div>
+			</div>
+			<div class="span3">
+				<div class="well text-center">
+					<img src="/static/img/beer_gave.png"/>
+					<br/><br/>
+					<a href="#oweThemModal" role="button" class="btn btn-primary" data-toggle="modal">I owe this guy a Beer</a>
+				</div>
+			</div>
+			<div class="span3">
+				<div class="well text-center">
+					<img src="/static/img/beer_lets.png"/>
+					<br/><br/>
+					<a href="#letsGoModal" role="button" class="btn btn-success" data-toggle="modal">Let's go for a Beer!</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-switch on="appState.user.username!=profile.username">
+	<div ng-switch-when="true">
+		<div class="row">
+			<div class="span3">
+			</div>
+			<div class="span9">
+				<div class="well">
+					I paid this guy a Beer, but he doesn't remember! &nbsp;
+					<a href="#rememberModal" role="button" class="btn" data-toggle="modal">Remember my Beer! Aaaaa!</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<h2>Gone out {{(profile.actions|filter:{verb:"redeemed"}).length}} times in the last 5 months</h2>
+
+<ul class="media-list">
+	<li ng-repeat="action in profile.actions" class="media"><div ng-include="" src="'/static/tmpl/formatted_actions.tmpl'"></li>
+</ul>
+
+<!-- Modals -->
+<div id="thankYouModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Thank you!</h3>
+  </div>
+  <div class="modal-body">
+    <p>You are awesome.</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">I know, I know</button>
+  </div>
+</div>
+
+<div id="rememberModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>I paid this guy a Beer!</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+	  <div class="control-group">
+	    <label class="control-label" for="inputComment">I do have a comment:</label>
+	    <div class="controls">
+	    	<textarea id="rememberInputComment" ng-model="rememberInputComment" class="input-block-level" rows="5" placeholder="Comment"></textarea>
+	    </div>
+	  </div>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	<button ng-click="remember()" id="rememberButton" class="btn btn-primary btn-huge">Remember my Beer! Aaaaa!</button>
+  </div>
+</div>
+
+<div id="gaveMeModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>They gave me Beer!</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+	  <div class="control-group">
+	    <label class="control-label" for="inputComment">I do have a comment:</label>
+	    <div class="controls">
+	    	<textarea id="gaveMeInputComment" ng-model="gaveMeInputComment" class="input-block-level" rows="5" placeholder="Comment"></textarea>
+	    </div>
+	  </div>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	<button ng-click="redeem()" id="redeemButton" class="btn btn-primary btn-huge">Thanks for the Beer</button>
+  </div>
+</div>
+
+<div id="oweThemModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>I owe this guy a Beer!</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+	  <div class="control-group">
+	    <label class="control-label" for="inputComment">I do have a comment:</label>
+	    <div class="controls">
+	    	<textarea id="oweThemInputComment" ng-model="oweThemInputComment" class="input-block-level" rows="5" placeholder="Comment"></textarea>
+	    </div>
+	  </div>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	<button ng-click="issue()" id="issueButton" class="btn btn-primary btn-huge">You deserve a Beer!</button>
+  </div>
+</div>
+
+<div id="letsGoModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Let's go out for a Beer!</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+	  <div class="control-group">
+	    <label class="control-label" for="inputComment">I do have a comment:</label>
+	    <div class="controls">
+	    	<textarea id="inputComment" ng-model="inputComment" class="input-block-level" rows="5" placeholder="Comment"></textarea>
+	    </div>
+	  </div>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	<button ng-click="ask()" id="askButton" class="btn btn-primary btn-huge">Let's go for a Beer!</button>
+  </div>
+</div>
+
+<br/><br/>
