@@ -69,12 +69,12 @@ angular.module('app.services', ['ngResource', 'ui']).
 var crowdbetApp = angular.module('app', ["app.services"]).
   config(function($routeProvider) {
      $routeProvider.
-       when('/', {controller:"MainCtrl", templateUrl:'/static/tmpl/main.tmpl'}).
+       // when('/', {controller:"MainCtrl", templateUrl:'/static/tmpl/main.tmpl'}).
        when('/login', {controller:"LoginCtrl", templateUrl:'/accounts/signin/?next=/'}).
        when('/profiles', {controller:"ListCtrl", templateUrl:'/static/tmpl/profiles.tmpl'}).
        when('/profile/:profileName', {controller:"ProfileCtrl", templateUrl:'/static/tmpl/profile.tmpl'}).
        // when('/edit/:projectId', {controller:EditCtrl, templateUrl:'detail.html'}).
-      otherwise({redirectTo:'/'});
+      otherwise({redirectTo:'/profiles'});
   }).
   controller ("ListCtrl", function ($scope, Profile, $location, appState) {
     // maybe we want to filter these some time
