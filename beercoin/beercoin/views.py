@@ -101,11 +101,12 @@ def issue_beercoin(request):
 def ask_out(request):
     issuer = request.user
     user = get_object_or_404(User, username=request.GET.get("user"))
+    comment = request.GET.get("comment", None)
 
     text_template = get_template('emails/ask_to_go_for_beer.txt')
     #html_template = get_template('emails/request_beercoin_redemption.html')
 
-    context_vars = Context({ 'user': user, 'issuer': issuer})
+    context_vars = Context({ 'user': user, 'issuer': issuer, 'comment': comment})
 
     text_content = text_template.render(context_vars)
     #html_content = html_template.render(context_vars)
@@ -159,11 +160,12 @@ def redeem_beercoin(request):
 def request_beercoin_redemption(request):
     issuer = request.user
     owner = get_object_or_404(User, username=request.GET.get("owner"))
+    comment = request.GET.get("comment", None)
 
     text_template = get_template('emails/request_beercoin_redemption.txt')
     #html_template = get_template('emails/request_beercoin_redemption.html')
 
-    context_vars = Context({ 'owner': owner, 'issuer': issuer, 'site': site})
+    context_vars = Context({ 'owner': owner, 'issuer': issuer, 'site': site, 'comment': comment})
 
     text_content = text_template.render(context_vars)
     #html_content = html_template.render(context_vars)
@@ -176,7 +178,7 @@ def request_beercoin_redemption(request):
         pushy["user_" + owner.username].trigger("msg", {
                 "type": "owe",
                 "message": "Hey, you owe me a beer",
-                "comment": request.GET.get("comment"),
+                "comment": comment,
                 "from": user_to_dict(issuer)
             });
     except Exception:
