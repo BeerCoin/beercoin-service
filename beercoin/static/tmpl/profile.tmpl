@@ -1,40 +1,36 @@
 <div class="page-header">
 	<h1>Profile of {{profile.name}}</h1>
+	<h2>In {{profile.location}}, balance: {{profile.balance}} beers</h2>
 </div>
 
 <div class="row">
-	<div class="span2">
+	<div class="span3">
 	    <div class="thumbnail">
-			<img ng-src="{{profile.icon}}" width="200"/>
+			<img ng-src="{{profile.icon}}" width="100%"/>
 	    </div>
 	</div>
-	<div class="span2">
-		<b>
-			Beer credits: {{profile.balance}}
-			<br/>
-			Location: {{profile.location}}
-		</b>
-	</div>
-	
 	<div ng-switch on="appState.user.username!=profile.name">
 		<div ng-switch-when="true">
-			<div class="span4">
+			<div class="span3">
 				<div class="well text-center">
 					<img src="/static/img/beer_got.png" ng-click="redeem()"/>
 					<br/><br/>
 					<button ng-click="redeem()" class="btn btn-primary btn-huge">They gave me my beer</button>
 				</div>
 			</div>
-			<div class="span4" ng-show="$parent.appState.user.balance > 0">
+			<div class="span3" ng-show="$parent.appState.user.balance > 0">
 				<div class="well text-center">
 					<img src="/static/img/beer_gave.png" ng-click="issue()"/>
 					<br/><br/>
 					<button ng-click="issue()" class="btn btn-primary btn-huge">I owe them a beer</button>
 				</div>
 			</div>
-			<div class="span4">
-
-				<button ng-click="ask()" class="btn btn-success btn-huge">Let's go for a Beer!</button>
+			<div class="span3">
+				<div class="well text-center">
+					<img src="/static/img/beer_lets.png" ng-click="ask()"/>
+					<br/><br/>
+					<button ng-click="ask()" class="btn btn-success btn-huge">Let's go for a Beer!</button>
+				</div>
 			</div>
 		</div>
 	</div>
