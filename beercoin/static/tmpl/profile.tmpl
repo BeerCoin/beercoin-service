@@ -36,7 +36,7 @@
 	</div>
 </div>
 
-	<h2>Gone out {{(profile.actions|filter:{verb:"freed"}).length}} times in the last 5 months</h2>
+	<h2>Gone out {{(profile.actions|filter:{verb:"redeemed"}).length}} times in the last 5 months</h2>
 
 <ul class="media-list">
 	<li ng-repeat="action in profile.actions" class="media"><div ng-include="" src="'/static/tmpl/formatted_actions.tmpl'"></li>
