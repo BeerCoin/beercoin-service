@@ -4,7 +4,31 @@
 {% block title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
+<div class="row">
+
+	<div class="span1">
+	</div>
+	<div class="span6">
+		
+		<br/><br/><br/><br/>
+		
+		<div class="media">
+			<a class="pull-left">
+				<img src="/static/img/logo_small.png" width="100"/>
+			</a>
+			<div class="media-body">
+				<h1>Beercoin</h1>
+				<h4>The beer to beer network.</h4>
+			</div>
+		</div>
+
+		<br/><br/>
+		<iframe width="95%" height="300" src="http://www.youtube.com/embed/yffJ69gUjRM" frameborder="0" allowfullscreen></iframe>
+
+	</div>
+	<div class="span4">
 <br/><br/>
+
 <form action="" method="post" class="form-signin">
   {% csrf_token %}
   <fieldset>
@@ -46,4 +70,9 @@
   Already have an account? <a href="/accounts/signin">Sign in</a> instead. 
   {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
+
+	</div>
+	<div class="span1">
+	</div>
+</div>
 {% endblock %}
