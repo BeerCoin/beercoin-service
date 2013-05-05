@@ -90,10 +90,11 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-USERENA_MUGSHOT_DEFAULT = "monsterid"
+USERENA_MUGSHOT_DEFAULT = "http://beercoin.me/static/img/default_monster.jpg"
 USERENA_SIGNIN_AFTER_SIGNUP = True
 USERENA_ACTIVATION_REQUIRED = False
 USERENA_SIGNIN_REDIRECT_URL = "/#"
+
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '990g168dm9=wve#894v-grfy+whmw!p$$6u2s2%#eya-5i%qj3'
