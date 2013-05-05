@@ -109,14 +109,15 @@ def ask_out(request):
 
     text_content = text_template.render(context_vars)
     #html_content = html_template.render(context_vars)
-    msg = EmailMultiAlternatives('Wanna go for a beer?', text_content, settings.DEFAULT_FROM_EMAIL, [user.email])
+    msg = EmailMultiAlternatives("Let's go out for a beer", text_content, settings.DEFAULT_FROM_EMAIL, [user.email])
     #msg.attach_alternative(html_content, "text/html")
     msg.send()
 
     try:
         pushy["user_" + user.username].trigger("msg", {
                 "type": "ask_out",
-                "message": "Wanna go for a beer?",
+                "message": "Let's go out for a beer.",
+                "comment": request.GET.get("comment"),
                 "from": user_to_dict(issuer)
             });
     except Exception:
@@ -175,6 +176,7 @@ def request_beercoin_redemption(request):
         pushy["user_" + owner.username].trigger("msg", {
                 "type": "owe",
                 "message": "Hey, you owe me a beer",
+                "comment": request.GET.get("comment"),
                 "from": user_to_dict(issuer)
             });
     except Exception:
