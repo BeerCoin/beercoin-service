@@ -23,7 +23,7 @@
 </div>
 
 <ul class="thumbnails">
-	<div class="row" style="margin-bottom:20px" ng-repeat="group in profiles|filter:searcher|group:4">
+	<div class="row" style="margin-left: 0; margin-bottom:20px" ng-repeat="group in profiles|filter:searcher|group:4">
 		<div class="span3" data-ng-repeat="profile in group">
 		    <div class="thumbnail">
 			  <a href="/#/profile/{{profile.username}}"><img src="{{profile.icon}}" width="100%"/></a>
