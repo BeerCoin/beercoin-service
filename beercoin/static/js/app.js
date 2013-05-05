@@ -3,8 +3,20 @@ angular.module('app.services', ['ngResource', 'ui']).
     return function(input){
       return moment(input).fromNow();
     };
-  }).
-  factory('pusher', function() {
+  }).filter('group', function(){
+     return function(items, groupSize) {
+        var groups = [],
+           inner;
+        for(var i = 0; i < items.length; i++) {
+           if(i % groupSize === 0) {
+              inner = [];
+              groups.push(inner);
+           }
+           inner.push(items[i]);
+        }
+        return groups;
+     };
+  }).factory('pusher', function() {
     var pusher = new Pusher('20adaedfdf8be72a2ed9');
     return pusher;
   }).
@@ -198,7 +210,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
       var channel = pusher.subscribe('user_' + appState.user.username);
       channel.bind('msg', function(data) {
       	$rootScope.$apply(function() {
-			appState.messageBox.visible = true;      		
+			appState.messageBox.visible = true;
 			appState.messageBox.message = data;
       	});
       });
