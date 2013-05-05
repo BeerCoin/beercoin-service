@@ -14,7 +14,12 @@
 		    <li><a href="/#/profiles/">People around you</a></li>
 		  </ul>
 		  <ul class="nav pull-right">
-		    <li><a href="/#/profile/{{appState.user.username}}">Profile</a></li>
+		    <li class="profile_with_icon">
+		    	<a href="/#/profile/{{appState.user.username}}">
+		    		<img src="{{appState.user.icon}}" class="img-circle pull-left"/>
+		    		Profile
+		    	</a>
+		    </li>
 		    <li><a href="/accounts/signout/">Log out</a></li>
 		  </ul>
 		</div>

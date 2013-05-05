@@ -64,3 +64,5 @@ footer { padding-top: 10px }
     font-weight: normal;
 }
 .alert UL { list-style: none; margin: 0; }
+
+.profile_with_icon IMG { width: 33px; margin-top: -7px; margin-right: 5px; }
