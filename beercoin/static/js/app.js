@@ -187,7 +187,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
     // checking for login and moving you to the login page if not
     $.getJSON("/api/v1/check_login", function(resp) {
       appState.user = resp.user;
-      if (!resp.success && document.location.href.indexOf("/accounts/") === -1) {
+      if (!resp.success) {
         document.location.href = "/accounts/signin/?next=/#" + $location.path();
       }
 
