@@ -61,7 +61,7 @@ def get_profile(request, profile_name):
     user_d["followers"] = followers(user)
     user_d["actions"] = [dict(verb=x.verb,
                               object=x.action_object and user_to_dict(x.action_object),
-                              when=x.timestamp.strftime("%s"),
+                              when=int(x.timestamp.strftime("%s")) * 1000,
                               data=x.data)
                          for x in actor_stream(user)[:3]]
     return user_d
