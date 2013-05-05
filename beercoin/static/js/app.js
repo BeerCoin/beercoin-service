@@ -140,8 +140,9 @@ var crowdbetApp = angular.module('app', ["app.services"]).
 
     $scope.remember = function() {
       $('#rememberButton').button('loading');
-      $.getJSON("/api/v1/beercoin/request/redemption", {owner: $scope.profile.username}, function(res) {
+      $.getJSON("/api/v1/beercoin/request/redemption", {comment: $scope.rememberInputComment, owner: $scope.profile.username}, function(res) {
         if (res.error) {
+            $('#rememberModal').modal('hide');
             $('#rememberButton').button('reset');
         	$('#thankYouModal .modal-body P').html(res.message);
         	$('#thankYouModal').modal();
@@ -149,6 +150,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
         }
         var pf_name = $scope.profile.name;
         $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
+        $('#rememberModal').modal('hide');
         $('#rememberButton').button('reset');
        	$('#thankYouModal .modal-body P').html(pf_name + " will remember soon. Everything will be alright.");
        	$('#thankYouModal').modal();

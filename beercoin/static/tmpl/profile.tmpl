@@ -9,7 +9,7 @@
 			<img ng-src="{{profile.icon}}" width="100%"/>
 	    </div>
 	</div>
-	<div ng-switch on="appState.user.username!=profile.name">
+	<div ng-switch on="appState.user.username!=profile.username">
 		<div ng-switch-when="true">
 			<div class="span3" ng-show="$parent.appState.user.balance > 0">
 				<div class="well text-center">
@@ -35,13 +35,17 @@
 		</div>
 	</div>
 </div>
-<div class="row">
-	<div class="span3">
-	</div>
-	<div class="span9">
-		<div class="well">
-			I paid this guy a Beer, but he doesn't remember! &nbsp;
-			<button ng-click="remember()" id="rememberButton" class="btn" data-loading-text="Remember my Beer! Aaaaa!" data-toggle="modal">Remember my Beer! Aaaaa!</button>
+<div ng-switch on="appState.user.username!=profile.username">
+	<div ng-switch-when="true">
+		<div class="row">
+			<div class="span3">
+			</div>
+			<div class="span9">
+				<div class="well">
+					I paid this guy a Beer, but he doesn't remember! &nbsp;
+					<a href="#rememberModal" role="button" class="btn" data-toggle="modal">Remember my Beer! Aaaaa!</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -63,6 +67,27 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">I know, I know</button>
+  </div>
+</div>
+
+<div id="rememberModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>I paid this guy a Beer!</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+	  <div class="control-group">
+	    <label class="control-label" for="inputComment">I do have a comment:</label>
+	    <div class="controls">
+	    	<textarea id="rememberInputComment" ng-model="rememberInputComment" class="input-block-level" rows="5" placeholder="Comment"></textarea>
+	    </div>
+	  </div>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	<button ng-click="remember()" id="rememberButton" class="btn btn-primary btn-huge">Remember my Beer! Aaaaa!</button>
   </div>
 </div>
 
