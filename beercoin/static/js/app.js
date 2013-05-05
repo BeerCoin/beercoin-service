@@ -103,7 +103,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
     $scope.appState = appState;
     appState.loggedIn = true;
     $scope.issue = function() {
-      // FIXME: disable button
+      $('#issueButton').button('loading');
       $.getJSON("/api/v1/beercoin/issue?owner=" + $scope.profile.username, function(res) {
         if (res.error) {
         	$('#thankYouModal .modal-body P').html(res.message);
@@ -112,37 +112,43 @@ var crowdbetApp = angular.module('app', ["app.services"]).
         }
         var pf_name = $scope.profile.name;
         $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
+        $('#issueButton').button('reset');
        	$('#thankYouModal .modal-body P').html(pf_name + " says thanks. You are awesome!");
        	$('#thankYouModal').modal();
       });
     };
     $scope.redeem = function() {
-      // FIXME: disable button
+      $('#redeemButton').button('loading');
       $.getJSON("/api/v1/beercoin/redeem?issuer=" + $scope.profile.username, function(res) {
         if (res.error) {
+            $('#redeemButton').button('reset');
         	$('#thankYouModal .modal-body P').html(res.message);
         	$('#thankYouModal').modal();
           return;
         }
         var pf_name = $scope.profile.name;
         $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
+        $('#redeemButton').button('reset');
        	$('#thankYouModal .modal-body P').html(pf_name + " was happy to help. You are awesome!");
        	$('#thankYouModal').modal();
       });
     };
 
     $scope.ask = function() {
-      // FIXME: disable button
-      console.log($scope.inputComment);
-      $.getJSON("/api/v1/social/ask?user=" + $scope.profile.username, function(res) {
+      $('#askButton').button('loading');
+      $.getJSON("/api/v1/social/ask", {comment: $scope.inputComment, user: $scope.profile.username}  , function(res) {
         if (res.error) {
+	      $('#letsGoModal').modal('hide');
+          $('#askButton').button('reset');
        	  $('#thankYouModal .modal-body P').html(res.message);
        	  $('#thankYouModal').modal();
           return;
         }
         var pf_name = $scope.profile.name;
         $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
-       	$('#thankYouModal .modal-body P').html(pf_name + " received your message.");
+        $('#letsGoModal').modal('hide');
+        $('#askButton').button('reset');
+       	$('#thankYouModal .modal-body P').html(pf_name + " is very happy for your message.");
        	$('#thankYouModal').modal();
       });
     };

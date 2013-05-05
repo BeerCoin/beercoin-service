@@ -30,7 +30,15 @@
 <div ng-show="appState.messageBox.visible">
 	<div class="popover fade right in" style="top: 4px; left: 320px; display: block;">
 		<div class="arrow"></div>
-		<h3 class="popover-title">Message from <b>{{appState.messageBox.message.from.name}}</b></h3>
+		<h3 class="popover-title">
+			<div class="pull-right">
+				<button class="close" ng-click="appState.messageBox.visible=false">&times;</button>
+			</div>
+			<b>Message from {{appState.messageBox.message.from.name}}</b>
+			<br/>
+			In {{appState.messageBox.message.from.location}},
+			has {{appState.messageBox.message.from.balance}} Beers
+		</h3>
 		<div class="popover-content">
 			<div class="media">
 			  <a class="pull-left" href="/#/profile/{{appState.messageBox.message.from.username}}">
@@ -38,9 +46,6 @@
 			  </a>
 			  <div class="media-body">
 				<p>
-					In {{appState.messageBox.message.from.location}},
-					has {{appState.messageBox.message.from.balance}} Beers
-					<br/>
 					{{appState.messageBox.message.message}}
 				</p>
 			  </div>
