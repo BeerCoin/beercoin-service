@@ -1,11 +1,11 @@
 <ng-switch on="action.verb">
 
-	<div ng-switch-when="freed">
-		went out with <a href="/#/profile/{{action.object.username}}">{{action.object.username}}</a>, who gave them a beer ({{timestamp|since}}) {{action.data.comment}}
+	<div ng-switch-when="redeemed">
+		went out with <a href="/#/profile/{{action.object.username}}">{{action.object.username}}</a>, who gave them a beer ({{action.when|since}}) {{action.data.comment}}
 	</div>
 
 	<div ng-switch-when="issued">
-		owes <a href="/#/profile/{{action.object.username}}">{{action.object.username}}</a> a beer <span ng-show="{{action.data.for_what}}">for {{action.data.for_what}}</span> ({{timestamp|since}}).
+		owes <a href="/#/profile/{{action.object.username}}">{{action.object.username}}</a> a beer ({{action.when|since}}).
 		{{action.data.comment}}
 	</div>
 
