@@ -15,14 +15,14 @@
 				<div class="well text-center">
 					<img src="/static/img/beer_got.png" ng-click="redeem()"/>
 					<br/><br/>
-					<button ng-click="redeem()" id="redeemButton" data-loading-text="They gave me my beer..." class="btn btn-primary btn-huge">They gave me my beer</button>
+					<a href="#gaveMeModal" role="button" class="btn btn-primary" data-toggle="modal">They gave me a beer!</a>
 				</div>
 			</div>
 			<div class="span3">
 				<div class="well text-center">
 					<img src="/static/img/beer_gave.png" ng-click="issue()"/>
 					<br/><br/>
-					<button ng-click="issue()" id="issueButton" data-loading-text="I owe them a beer..." class="btn btn-primary btn-huge">I owe them a beer</button>
+					<a href="#oweThemModal" role="button" class="btn btn-primary" data-toggle="modal">I owe this guy a Beer</a>
 				</div>
 			</div>
 			<div class="span3">
@@ -46,7 +46,7 @@
 <div id="thankYouModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="thankYouModal">Thank you!</h3>
+    <h3>Thank you!</h3>
   </div>
   <div class="modal-body">
     <p>You are awesome.</p>
@@ -56,10 +56,52 @@
   </div>
 </div>
 
+<div id="gaveMeModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>They gave me Beer!</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+	  <div class="control-group">
+	    <label class="control-label" for="inputComment">I do have a comment:</label>
+	    <div class="controls">
+	    	<textarea id="gaveMeInputComment" ng-model="gaveMeInputComment" class="input-block-level" rows="5" placeholder="Comment"></textarea>
+	    </div>
+	  </div>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	<button ng-click="redeem()" id="redeemButton" class="btn btn-primary btn-huge">Thanks for the Beer</button>
+  </div>
+</div>
+
+<div id="oweThemModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>I owe this guy a Beer!</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+	  <div class="control-group">
+	    <label class="control-label" for="inputComment">I do have a comment:</label>
+	    <div class="controls">
+	    	<textarea id="oweThemInputComment" ng-model="oweThemInputComment" class="input-block-level" rows="5" placeholder="Comment"></textarea>
+	    </div>
+	  </div>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	<button ng-click="issue()" id="issueButton" class="btn btn-primary btn-huge">You deserve a Beer!</button>
+  </div>
+</div>
+
 <div id="letsGoModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="thankYouModal">Let's go out for a Beer!</h3>
+    <h3>Let's go out for a Beer!</h3>
   </div>
   <div class="modal-body">
     <p>

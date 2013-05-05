@@ -100,18 +100,20 @@ var crowdbetApp = angular.module('app', ["app.services"]).
   }).
   controller ("ProfileCtrl", function ($scope, Profile, $route, $location, appState) {
     $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
-    $scope.appState = appState;
     appState.loggedIn = true;
+    $scope.appState = appState;
     $scope.issue = function() {
       $('#issueButton').button('loading');
-      $.getJSON("/api/v1/beercoin/issue?owner=" + $scope.profile.username, function(res) {
+      $.getJSON("/api/v1/beercoin/issue", {comment: $scope.oweThemInputComment, owner: $scope.profile.username}, function(res) {
         if (res.error) {
+	        $('#oweThemModal').modal('hide');
         	$('#thankYouModal .modal-body P').html(res.message);
         	$('#thankYouModal').modal();
           return;
         }
         var pf_name = $scope.profile.name;
         $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
+	    $('#oweThemModal').modal('hide');
         $('#issueButton').button('reset');
        	$('#thankYouModal .modal-body P').html(pf_name + " says thanks. You are awesome!");
        	$('#thankYouModal').modal();
@@ -119,8 +121,9 @@ var crowdbetApp = angular.module('app', ["app.services"]).
     };
     $scope.redeem = function() {
       $('#redeemButton').button('loading');
-      $.getJSON("/api/v1/beercoin/redeem?issuer=" + $scope.profile.username, function(res) {
+      $.getJSON("/api/v1/beercoin/redeem", {comment: $scope.gaveMeInputComment, issuer: $scope.profile.username}, function(res) {
         if (res.error) {
+	        $('#gaveMeModal').modal('hide');
             $('#redeemButton').button('reset');
         	$('#thankYouModal .modal-body P').html(res.message);
         	$('#thankYouModal').modal();
@@ -128,6 +131,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
         }
         var pf_name = $scope.profile.name;
         $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
+	    $('#gaveMeModal').modal('hide');
         $('#redeemButton').button('reset');
        	$('#thankYouModal .modal-body P').html(pf_name + " was happy to help. You are awesome!");
        	$('#thankYouModal').modal();
@@ -136,7 +140,7 @@ var crowdbetApp = angular.module('app', ["app.services"]).
 
     $scope.ask = function() {
       $('#askButton').button('loading');
-      $.getJSON("/api/v1/social/ask", {comment: $scope.inputComment, user: $scope.profile.username}  , function(res) {
+      $.getJSON("/api/v1/social/ask", {comment: $scope.inputComment, user: $scope.profile.username}, function(res) {
         if (res.error) {
 	      $('#letsGoModal').modal('hide');
           $('#askButton').button('reset');
