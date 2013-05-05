@@ -23,8 +23,8 @@
 </div>
 
 <ul class="thumbnails">
-	<div data-ng-repeat="profile in profiles|filter:searcher">
-		<li class="span3">
+	<div class="row" style="margin-bottom:20px" ng-repeat="group in profiles|filter:searcher|group:4">
+		<div class="span3" data-ng-repeat="profile in group">
 		    <div class="thumbnail">
 			  <a href="/#/profile/{{profile.username}}"><img src="{{profile.icon}}" width="100%"/></a>
 		      <h3>{{profile.name}}</h3>
@@ -33,7 +33,7 @@
 				<a href="/#/profile/{{profile.username}}" class="btn">Go to profile</a>
 		      </p>
 		    </div>
-		</li>
+		</div>
 	</div>
 </ul>
 
