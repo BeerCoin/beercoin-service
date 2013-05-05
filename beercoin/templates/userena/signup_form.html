@@ -4,7 +4,23 @@
 {% block title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
+<div class="row">
+
+	<div class="span2">
+	</div>
+	<div class="span4">
+		
+		<br/><br/><br/>
+		
+		<img src="/static/img/logo_small.png" width="80%"/>
+		<br/>
+		<h1>Beercoin</h1>
+		<h4>The beer to beer network.</h4>
+
+	</div>
+	<div class="span4">
 <br/><br/>
+
 <form action="" method="post" class="form-signin">
   {% csrf_token %}
   <fieldset>
@@ -46,4 +62,9 @@
   Already have an account? <a href="/accounts/signin">Sign in</a> instead. 
   {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
+
+	</div>
+	<div class="span2">
+	</div>
+</div>
 {% endblock %}
