@@ -11,7 +11,7 @@ ADMINS = (
     ('Ben', 'ben.kampmann+beercoin@gmail.com'),
 )
 
-DEFAULT_FROM_EMAIL = "no-reply@beercoin.me"
+DEFAULT_FROM_EMAIL = "Beercoin <no-reply@beercoin.me>"
 
 MANAGERS = ADMINS
 
