@@ -1,4 +1,7 @@
-Hi
+Hi {{ issuer.first_name}}
 
-redeem me
+Has {{ owner.username }} bought you a beer?
 
+If yes, then redeem to bitcoin here:
+
+http://{{ site.domain }}{% url 'beercoin.beercoin.views.grant_beercoin_redemption' %}?issuer={{ owner.username }}

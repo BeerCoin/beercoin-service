@@ -11,7 +11,10 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
 from django.conf import settings
+from django.contrib.sites.models import Site
+from django.shortcuts import render
 
+site = Site.objects.get_current()
 
 import pusher
 pusher.app_id = settings.PUSHER_APP_ID
@@ -134,7 +137,7 @@ def redeem_beercoin(request):
         raise BeerCoinTransactionError("You can owe beers yourself")
 
     if owner.profile.balance <= 0:
-        raise BeerCoinTransactionError("You can only redeem if you are in plus.") 
+        raise BeerCoinTransactionError("You can only redeem if you are in plus.")
 
     owner.profile.balance -= 1
     issuer.profile.balance += 1
@@ -159,13 +162,15 @@ def request_beercoin_redemption(request):
     text_template = get_template('emails/request_beercoin_redemption.txt')
     #html_template = get_template('emails/request_beercoin_redemption.html')
 
-    context_vars = Context({ 'owner': owner, 'issuer': issuer})
+    context_vars = Context({ 'owner': owner, 'issuer': issuer, 'site': site})
 
     text_content = text_template.render(context_vars)
     #html_content = html_template.render(context_vars)
     msg = EmailMultiAlternatives('You owe me a beer', text_content, settings.DEFAULT_FROM_EMAIL, [owner.email])
     #msg.attach_alternative(html_content, "text/html")
     msg.send()
+
+    print "sent email"
 
     try:
         pushy["user_" + owner.username].trigger("msg", {
@@ -177,3 +182,10 @@ def request_beercoin_redemption(request):
         pass
 
     return {"success": True}
+
+@login_required
+def grant_beercoin_redemption(request):
+    owner = request.user
+    issuer = get_object_or_404(User, username=request.GET.get("issuer"))
+
+    return render(request, 'grant_redemption.html', locals())
