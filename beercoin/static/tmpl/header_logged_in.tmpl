@@ -42,7 +42,7 @@
 		<div class="popover-content">
 			<div class="media">
 			  <a class="pull-left" href="/#/profile/{{appState.messageBox.message.from.username}}">
-				<img src="{{appState.messageBox.message.from.icon}}" class="media-object img-circle pull-left" width="50"/>
+				<img src="{{appState.messageBox.message.from.icon}}" ng-click="appState.messageBox.visible=false" class="media-object img-circle pull-left" width="50"/>
 			  </a>
 			  <div class="media-body">
 				<p>
