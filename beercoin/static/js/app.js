@@ -138,6 +138,23 @@ var crowdbetApp = angular.module('app', ["app.services"]).
       });
     };
 
+    $scope.remember = function() {
+      $('#rememberButton').button('loading');
+      $.getJSON("/api/v1/beercoin/request/redemption", {owner: $scope.profile.username}, function(res) {
+        if (res.error) {
+            $('#rememberButton').button('reset');
+        	$('#thankYouModal .modal-body P').html(res.message);
+        	$('#thankYouModal').modal();
+          return;
+        }
+        var pf_name = $scope.profile.name;
+        $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
+        $('#rememberButton').button('reset');
+       	$('#thankYouModal .modal-body P').html(pf_name + " will remember soon. Everything will be alright.");
+       	$('#thankYouModal').modal();
+      });
+    };
+
     $scope.ask = function() {
       $('#askButton').button('loading');
       $.getJSON("/api/v1/social/ask", {comment: $scope.inputComment, user: $scope.profile.username}, function(res) {

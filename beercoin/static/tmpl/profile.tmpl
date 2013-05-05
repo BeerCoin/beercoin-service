@@ -13,25 +13,35 @@
 		<div ng-switch-when="true">
 			<div class="span3" ng-show="$parent.appState.user.balance > 0">
 				<div class="well text-center">
-					<img src="/static/img/beer_got.png" ng-click="redeem()"/>
+					<img src="/static/img/beer_got.png"/>
 					<br/><br/>
 					<a href="#gaveMeModal" role="button" class="btn btn-primary" data-toggle="modal">They gave me a beer!</a>
 				</div>
 			</div>
 			<div class="span3">
 				<div class="well text-center">
-					<img src="/static/img/beer_gave.png" ng-click="issue()"/>
+					<img src="/static/img/beer_gave.png"/>
 					<br/><br/>
 					<a href="#oweThemModal" role="button" class="btn btn-primary" data-toggle="modal">I owe this guy a Beer</a>
 				</div>
 			</div>
 			<div class="span3">
 				<div class="well text-center">
-					<img src="/static/img/beer_lets.png" ng-click="ask()"/>
+					<img src="/static/img/beer_lets.png"/>
 					<br/><br/>
 					<a href="#letsGoModal" role="button" class="btn btn-success" data-toggle="modal">Let's go for a Beer!</a>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="span3">
+	</div>
+	<div class="span9">
+		<div class="well">
+			I paid this guy a Beer, but he doesn't remember! &nbsp;
+			<button ng-click="remember()" id="rememberButton" class="btn" data-loading-text="Remember my Beer! Aaaaa!" data-toggle="modal">Remember my Beer! Aaaaa!</button>
 		</div>
 	</div>
 </div>
