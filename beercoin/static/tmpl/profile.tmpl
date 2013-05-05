@@ -19,13 +19,13 @@
 	<div ng-switch on="appState.user.username!=profile.name">
 		<div ng-switch-when="true">
 			<div class="span4">
-				<div class="well text-center">
+				<div class="well text-center" ng-show="$parent.appState.user.balance > 0">
 					<img src="/static/img/beer_got.png" ng-click="redeem()"/>
 					<br/><br/>
 					<button ng-click="redeem()" class="btn btn-primary btn-huge">They gave me my beer</button>
 				</div>
 			</div>
-			<div class="span4" ng-show="$parent.appState.user.balance > 0">
+			<div class="span4">
 				<div class="well text-center">
 					<img src="/static/img/beer_gave.png" ng-click="issue()"/>
 					<br/><br/>
