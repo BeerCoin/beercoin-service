@@ -1,6 +1,11 @@
 Hi
 
-{{ issuer.username }} asked, if you'd like to go for beers with them. If interested please send an email to {{ issuer.email }}.
+{{ issuer.username }} asked, if you'd like to go for beers with them. If you are interested please send an email to {{ issuer.email }}.
 
 Happy Beer-ing!
 
+{% if comment %}
+{{ issuer.username }} wants to tell you:
+
+{{ comment }}
+{% endif %}

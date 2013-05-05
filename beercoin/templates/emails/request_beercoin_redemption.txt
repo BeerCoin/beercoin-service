@@ -1,7 +1,14 @@
-Hi {{ issuer.first_name}}
+Hi {{ issuer.username }}
 
-Has {{ owner.username }} bought you a beer?
+{{ owner.username }} says they bought you a beer.
 
-If yes, then redeem to bitcoin here:
+If they did then please redeem your beercoin here:
 
 http://{{ site.domain }}{% url 'beercoin.beercoin.views.grant_beercoin_redemption' %}?issuer={{ owner.username }}
+
+{% if comment %}
+They want to tell you:
+
+{{ comment }}
+{% endif %}
+
