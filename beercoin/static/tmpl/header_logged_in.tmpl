@@ -14,10 +14,37 @@
 		    <li><a href="/#/profiles/">People around you</a></li>
 		  </ul>
 		  <ul class="nav pull-right">
-		    <li><a href="/#/profile/{{appState.user.username}}">Profile</a></li>
+		    <li class="profile_with_icon">
+		    	<a href="/#/profile/{{appState.user.username}}">
+		    		<img src="{{appState.user.icon}}" class="img-circle pull-left"/>
+		    		Profile
+		    	</a>
+		    </li>
 		    <li><a href="/accounts/signout/">Log out</a></li>
 		  </ul>
 		</div>
     </div>
   </div><!-- /.navbar -->
+</div>
+
+<div ng-show="appState.messageBox.visible">
+	<div class="popover fade right in" style="top: 4px; left: 320px; display: block;">
+		<div class="arrow"></div>
+		<h3 class="popover-title">Message from <b>{{appState.messageBox.message.from.name}}</b></h3>
+		<div class="popover-content">
+			<div class="media">
+			  <a class="pull-left" href="/#/profile/{{appState.messageBox.message.from.username}}">
+				<img src="{{appState.messageBox.message.from.icon}}" class="media-object img-circle pull-left" width="50"/>
+			  </a>
+			  <div class="media-body">
+				<p>
+					In {{appState.messageBox.message.from.location}},
+					has {{appState.messageBox.message.from.balance}} Beers
+					<br/>
+					{{appState.messageBox.message.message}}
+				</p>
+			  </div>
+			</div>
+		</div>
+	</div>
 </div>

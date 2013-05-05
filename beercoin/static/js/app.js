@@ -58,7 +58,11 @@ angular.module('app.services', ['ngResource', 'ui']).
   }).
   service('appState', function(){
   	return {
-  		loggedIn: false
+  		loggedIn: false,
+  		messageBox: {
+  			visible: false,
+  			message: {}
+  		}
   	};
   });
 
@@ -129,14 +133,17 @@ var crowdbetApp = angular.module('app', ["app.services"]).
 
     $scope.ask = function() {
       // FIXME: disable button
+      console.log($scope.inputComment);
       $.getJSON("/api/v1/social/ask?user=" + $scope.profile.username, function(res) {
         if (res.error) {
-          alert(res.message);
+       	  $('#thankYouModal .modal-body P').html(res.message);
+       	  $('#thankYouModal').modal();
           return;
         }
         var pf_name = $scope.profile.name;
         $scope.profile = Profile.get({profileId: $route.current.params["profileName"]});
-        alert(pf_name + " received your message.");
+       	$('#thankYouModal .modal-body P').html(pf_name + " received your message.");
+       	$('#thankYouModal').modal();
       });
     };
   }).
@@ -145,13 +152,8 @@ var crowdbetApp = angular.module('app', ["app.services"]).
   }).
   controller ("MainCtrl", function ($scope, $location, appState) {
     $scope.app_name = "My first angular App";
-    $scope.show_popup = false;
     appState.loggedIn = true;
-    $scope.showPopup = function() {
-    	$scope.show_popup = !$scope.show_popup;
-    	console.log($scope.show_popup);
-    };
-  }).run(function($location, pusher, appState) {
+  }).run(function($location, pusher, appState, $rootScope) {
     // checking for login and moving you to the login page if not
     $.getJSON("/api/v1/check_login", function(resp) {
       appState.user = resp.user;
@@ -161,7 +163,10 @@ var crowdbetApp = angular.module('app', ["app.services"]).
 
       var channel = pusher.subscribe('user_' + appState.user.username);
       channel.bind('msg', function(data) {
-        alert(data);
+      	$rootScope.$apply(function() {
+			appState.messageBox.visible = true;      		
+			appState.messageBox.message = data;
+      	});
       });
     });
   })
