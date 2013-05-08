@@ -39,7 +39,7 @@ urlpatterns = patterns('',
     (r'^$', TemplateView.as_view(template_name="app.html")),
 )
 
-from django.conf import settings
-urlpatterns += patterns('',
-    (r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-)
+# from django.conf import settings
+# urlpatterns += patterns('',
+#     (r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+# )
