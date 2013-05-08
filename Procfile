@@ -1,1 +1,1 @@
-web: gunicorn beercoin.wsgi
+web: python manage.py collectstatic --noinput; gunicorn beercoin.wsgi
