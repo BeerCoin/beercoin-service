@@ -243,7 +243,7 @@ else:
     DEBUG = False
     TEMPLATE_DEBUG = DEBUG
     # Required or get_host will fail on heroku
-    ALLOWED_HOSTS = ['beercoin.me', 'beercoin.herokuapp.com']
+    ALLOWED_HOSTS = ['www.beercoin.me', 'beercoin.me', 'beercoin.herokuapp.com']
 
 #
 # End production settings
