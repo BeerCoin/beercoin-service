@@ -128,7 +128,7 @@ ROOT_URLCONF = 'beercoin.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'beercoin.wsgi.application'
 
-EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
@@ -222,13 +222,27 @@ else:
 #
 # Required values for Heroku production environment
 #
+    import sys
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'console':{
+                'level':'INFO',
+                'class':'logging.StreamHandler',
+                'stream': sys.stdout
+            },
+        }
+    }
     # Parse database configuration from $DATABASE_URL
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     import dj_database_url
     DATABASES['default'] = dj_database_url.config()
     # Honor the 'X-Forwarded-Proto' header for request.is_secure()
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     DEBUG = False
     TEMPLATE_DEBUG = DEBUG
+    ALLOWED_HOSTS = ['ancient-ocean-9910.herokuapp.com']
 #
 # End production settings
 #
