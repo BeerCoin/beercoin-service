@@ -242,7 +242,9 @@ else:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     DEBUG = False
     TEMPLATE_DEBUG = DEBUG
-    ALLOWED_HOSTS = ['ancient-ocean-9910.herokuapp.com']
+    # Required or get_host will fail on heroku
+    ALLOWED_HOSTS = ['beercoin.me', 'beercoin.herokuapp.com']
+
 #
 # End production settings
 #
